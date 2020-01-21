@@ -4,6 +4,7 @@ namespace BasketLeague.Models
 {
     class Team
     {
+        public string NombreCompleto { get; set; }
         public string Nombre { get; set; }
         public int Ataque { get; set; }
         public int Defensa { get; set; }
@@ -12,12 +13,12 @@ namespace BasketLeague.Models
 
         public int Atacar(Team rival, Random rnd)
         {
-            return 50 + (rnd.Next(5, 10) * Ataque + rnd.Next(5, 10) * Tiro) - (rnd.Next(1, 5) * rival.Defensa + rnd.Next(1, 5) * rival.Rebote);
+            return 80 + (rnd.Next(5, 10) * Ataque + rnd.Next(5, 10) * Tiro) - (rnd.Next(1, 5) * rival.Defensa + rnd.Next(1, 5) * rival.Rebote);
         }
 
         public int Defender(Team rival, Random rnd)
         {
-            return 20 + (rnd.Next(5, 10) * Defensa + rnd.Next(5, 10) * Rebote) - (rnd.Next(1, 5) * rival.Ataque + rnd.Next(1, 5) * rival.Tiro);
+            return 50 + (rnd.Next(5, 10) * Defensa + rnd.Next(5, 10) * Rebote) - (rnd.Next(1, 5) * rival.Ataque + rnd.Next(1, 5) * rival.Tiro);
         }
 
         public int Resultado(int defender, int atacar)
@@ -37,7 +38,7 @@ namespace BasketLeague.Models
 
         public override string ToString()
         {
-            return Nombre;
+            return NombreCompleto;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace BasketLeague
                         Defensa = int.Parse(line.Split(' ')[2]),
                         Tiro = int.Parse(line.Split(' ')[3]),
                         Rebote = int.Parse(line.Split(' ')[4]),
-
+                        NombreCompleto = line.Split(' ')[5].Replace('_', ' ')
                     };
 
                     line = sr.ReadLine();
@@ -55,26 +55,24 @@ namespace BasketLeague
 
                 Random rnd = new Random();
 
-                for (int i = 0; i < 10; i++)
+                int ha = home.Atacar(rival, rnd);
+                int hd = home.Defender(rival, rnd);
+
+                int ra = rival.Atacar(home, rnd);
+                int rd = rival.Defender(home, rnd);
+
+                Console.WriteLine("----------");
+                if (ha < hd && ra < rd)
                 {
-                    int ha = home.Atacar(rival, rnd);
-                    int hd = home.Defender(rival, rnd);
-
-                    int ra = rival.Atacar(home, rnd);
-                    int rd = rival.Defender(home, rnd);
-
-                    if (ha < hd && ra < rd)
-                    {
-                        Console.WriteLine(string.Format("Home: {0}", home.Resultado(hd, ha) / 4 * 3));
-                        Console.WriteLine(string.Format("Rival: {0}", rival.Resultado(rd, ra) / 4 * 3));
-                    }
-                    else
-                    {
-                        Console.WriteLine(string.Format("Home: {0}", home.Resultado(hd, ha)));
-                        Console.WriteLine(string.Format("Rival: {0}", rival.Resultado(rd, ra)));
-                    }
-                    Console.WriteLine("----------");
+                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, home.Resultado(hd, ha) / 2));
+                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rival.Resultado(rd, ra) / 2));
                 }
+                else
+                {
+                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, home.Resultado(hd, ha)));
+                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rival.Resultado(rd, ra)));
+                }
+                Console.WriteLine("----------");
             }
             finally
             {
