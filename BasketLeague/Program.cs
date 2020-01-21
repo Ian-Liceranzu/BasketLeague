@@ -11,14 +11,7 @@ namespace BasketLeague
         {
             Console.WriteLine("Bienvenido a la competición");
 
-            Console.WriteLine("Introduce la ruta del archivo con los equipos");
-
-            string path = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                path = @"C:\Users\PcCom\Desktop\Prueba.txt";
-            }
+            string path = @"Data\Teams.txt";
 
             List<Team> teams = new List<Team>();
 
@@ -34,8 +27,9 @@ namespace BasketLeague
                         Nombre = line.Split(' ')[0],
                         Ataque = int.Parse(line.Split(' ')[1]),
                         Defensa = int.Parse(line.Split(' ')[2]),
-                        Rebote = int.Parse(line.Split(' ')[3]),
-                        Tiro = int.Parse(line.Split(' ')[4])
+                        Tiro = int.Parse(line.Split(' ')[3]),
+                        Rebote = int.Parse(line.Split(' ')[4]),
+
                     };
 
                     line = sr.ReadLine();
@@ -59,13 +53,19 @@ namespace BasketLeague
                 Console.WriteLine("Equipo contrario:");
                 Team rival = teams[int.Parse(Console.ReadLine())];
 
-                int ha = home.Atacar(rival);
-                int hd = home.Defender(rival);
-                int ra = rival.Atacar(home);
-                int rd = rival.Defender(home);
+                Random rnd = new Random();
 
-                Console.WriteLine(string.Format("Home: {0} ({1} - {2})", home.Resultado(hd, ha), hd, ha));
-                Console.WriteLine(string.Format("Rival: {0} ({1} - {2})", rival.Resultado(rd, ra), rd, ra));
+                for (int i = 0; i < 10; i++)
+                {
+                    int ha = home.Atacar(rival, rnd);
+                    int hd = home.Defender(rival, rnd);
+                    int ra = rival.Atacar(home, rnd);
+                    int rd = rival.Defender(home, rnd);
+
+                    Console.WriteLine(string.Format("Home: {0} ({1} - {2})", home.Resultado(hd, ha), hd, ha));
+                    Console.WriteLine(string.Format("Rival: {0} ({1} - {2})", rival.Resultado(rd, ra), rd, ra));
+                    Console.WriteLine("----------");
+                }
             }
             finally
             {
