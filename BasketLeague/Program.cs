@@ -59,11 +59,20 @@ namespace BasketLeague
                 {
                     int ha = home.Atacar(rival, rnd);
                     int hd = home.Defender(rival, rnd);
+
                     int ra = rival.Atacar(home, rnd);
                     int rd = rival.Defender(home, rnd);
 
-                    Console.WriteLine(string.Format("Home: {0} ({1} - {2})", home.Resultado(hd, ha), hd, ha));
-                    Console.WriteLine(string.Format("Rival: {0} ({1} - {2})", rival.Resultado(rd, ra), rd, ra));
+                    if (ha < hd && ra < rd)
+                    {
+                        Console.WriteLine(string.Format("Home: {0}", home.Resultado(hd, ha) / 4 * 3));
+                        Console.WriteLine(string.Format("Rival: {0}", rival.Resultado(rd, ra) / 4 * 3));
+                    }
+                    else
+                    {
+                        Console.WriteLine(string.Format("Home: {0}", home.Resultado(hd, ha)));
+                        Console.WriteLine(string.Format("Rival: {0}", rival.Resultado(rd, ra)));
+                    }
                     Console.WriteLine("----------");
                 }
             }
