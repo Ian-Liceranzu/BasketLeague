@@ -9,3 +9,4 @@ CH 4 6 4 6 Columbus_Hellbenders
 SKW 8 3 5 4 Seattle_Killer_Whales
 KK 5 5 5 5 Kansas_Kangaroos
 DS 5 5 5 5 Dallas_Squirrels
+MR 7 4 8 1 Miami_Rats
