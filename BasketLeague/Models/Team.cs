@@ -5,6 +5,11 @@ namespace BasketLeague.Models
     class Team
     {
         /// <summary>
+        /// Código identificador del equipo
+        /// </summary>
+        public int Codigo { get; set; }
+
+        /// <summary>
         /// Nombre completo del equipo
         /// </summary>
         public string NombreCompleto { get; set; }

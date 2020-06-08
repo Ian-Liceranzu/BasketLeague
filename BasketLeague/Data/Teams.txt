@@ -1,12 +1,12 @@
-MP 3 7 6 4 Milwaukee_Playpus
-THB 4 8 2 6 Tampa_Honey_Bagers
-JP 5 10 3 2 Jackson_Pandas
-LTW 3 8 2 7 Little_Rock_Wombats
-RB 7 3 7 3 Reno_Bighorns
-BF 5 5 5 5 Boston_Frogs
-HM 5 5 5 5 Honolulu_Meerkats
-CH 4 6 4 6 Columbus_Hellbenders
-SKW 8 3 5 4 Seattle_Killer_Whales
-KK 5 5 5 5 Kansas_Kangaroos
-DS 5 5 5 5 Dallas_Squirrels
-MR 7 4 8 1 Miami_Rats
+MP 3 7 6 4 Milwaukee_Platypus 1
+THB 4 8 2 6 Tampa_Honey_Bagers 2
+JP 5 10 3 2 Jackson_Pandas 3
+LTW 3 8 2 7 Little_Rock_Wombats 4
+RB 7 3 7 3 Reno_Bighorns 5
+BF 5 5 5 5 Boston_Frogs 6
+HM 5 5 5 5 Honolulu_Meerkats 7
+CH 4 6 4 6 Columbus_Hellbenders 8
+SKW 8 3 5 4 Seattle_Killer_Whales 9
+KK 5 5 5 5 Kansas_Kangaroos 10
+DS 5 5 5 5 Dallas_Squirrels 11
+MR 7 4 8 1 Miami_Rats 12
