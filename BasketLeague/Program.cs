@@ -128,7 +128,7 @@ namespace BasketLeague
             ExcelPackage excelPackage = new ExcelPackage(file);
             ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets[0];
 
-            int row = excelWorksheet.Cells.First(c => c.Value == null && c.Start.Column == 14).End.Row;
+            int row = excelWorksheet.Cells.First(c => c.Value == null && c.Start.Column == 14).Start.Row;
 
             excelWorksheet.Cells["N" + row].Value = home.Nombre;
             excelWorksheet.Cells["P" + row].Value = resultadoHome;
@@ -161,11 +161,7 @@ namespace BasketLeague
         {
             string cellRange = "B2:B12"; // Tabla de los equipos
 
-            var searchCell = from cell in excelWorksheet.Cells[cellRange]
-                             where cell.Value?.ToString() == team.NombreCompleto
-                             select cell.Start.Row;
-
-            int rowNum = searchCell.First();
+            var rowNum = excelWorksheet.Cells[cellRange].First(c => c.Value?.ToString() == team.NombreCompleto).Start.Row;
 
             // Sumar partidos jugados
             excelWorksheet.Cells["C" + rowNum].Value = int.Parse(excelWorksheet.Cells["C" + rowNum].Value.ToString()) + 1;
