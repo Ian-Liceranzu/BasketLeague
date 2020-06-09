@@ -58,8 +58,8 @@ namespace BasketLeague
                     hr = home.Resultado(hd, ha);
                     rr = rival.Resultado(rd, ra);
 
-                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, home.Resultado(hd, ha)));
-                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rival.Resultado(rd, ra)));
+                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, hr));
+                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rr));
 
                     WriteDataToFile(home, hr, rival, rr);
                 }
@@ -124,7 +124,7 @@ namespace BasketLeague
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            FileInfo file = new FileInfo(@"C:\Users\IanLiceranzu\Desktop\FrikiLeague\FrikiLeague_v2.xlsx");
+            FileInfo file = new FileInfo(@"C:\Users\IanLiceranzu\Source\Repos\BasketLeague\BasketLeague\Data\FrikiLeague.xlsx");
             ExcelPackage excelPackage = new ExcelPackage(file);
             ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets[0];
 
