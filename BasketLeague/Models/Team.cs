@@ -33,6 +33,10 @@ namespace BasketLeague.Models
         /// Puntuación en rebote del equipo
         /// </summary>
         public int Rebote { get; set; }
+        /// <summary>
+        /// Nombre del dueño del equipo
+        /// </summary>
+        public string Dueño { get; set; }
 
         /// <summary>
         /// El equipo en cuestión ataca a un rival
