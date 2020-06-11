@@ -84,7 +84,8 @@ namespace BasketLeague
 		/// <returns>Lista de los equipos cargados</returns>
 		static List<Team> CargarEquipos()
 		{
-			string path = @"Data\Teams.txt";
+			string path = @"Data\Teams.xlsx";
+			// string path = @"Data\TeamsSummerCamp.xlsx";
 
 			List<Team> teams = new List<Team>();
 
