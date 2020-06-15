@@ -197,6 +197,10 @@ namespace BasketLeague
             excelWorksheet.Cells["G" + rowNum].Value = int.Parse(excelWorksheet.Cells["G" + rowNum].Value.ToString()) + diferencia;
         }
 
+        /// <summary>
+        /// Reproduce un clip dentro de la carpeta data
+        /// </summary>
+        /// <param name="song">Archivo concreto para reproducir</param>
         static void PlaySound(string song)
         {
             if (song.Split('.')[song.Split().Length - 1] == "mp3")
