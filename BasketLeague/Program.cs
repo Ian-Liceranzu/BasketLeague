@@ -86,8 +86,8 @@ namespace BasketLeague
         /// <returns>Lista de los equipos cargados</returns>
         static List<Team> CargarEquipos()
         {
-            string path = @"Data\Teams.txt";
-            // string path = @"Data\TeamsSummerCamp.txt";
+            // string path = @"Data\Teams.txt";
+            string path = @"Data\TeamsSummerCamp.txt";
 
             List<Team> teams = new List<Team>();
 
@@ -155,7 +155,7 @@ namespace BasketLeague
             else
             {
                 Console.WriteLine("Felicidades " + rival.Dueño);
-                PlaySound(home.Song);
+                PlaySound(rival.Song);
             }
 
             excelWorksheet.Cells["R" + row].Value = diferencia;
