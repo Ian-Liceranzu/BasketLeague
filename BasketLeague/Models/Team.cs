@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 
 namespace BasketLeague.Models
 {
@@ -37,6 +38,10 @@ namespace BasketLeague.Models
         /// Nombre del dueño del equipo
         /// </summary>
         public string Dueño { get; set; }
+        /// <summary>
+        /// Nombre de la canción
+        /// </summary>
+        public string Song { get; set; }
 
         /// <summary>
         /// El equipo en cuestión ataca a un rival
