@@ -70,7 +70,7 @@
     <Content Include="Data\Sound\BM.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Sound\Daira.mpeg">
+    <Content Include="Data\Sound\Daira.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Sound\Estanis.mp3">
