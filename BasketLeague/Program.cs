@@ -154,14 +154,12 @@ namespace BasketLeague
             {
                 Console.WriteLine("Felicidades " + home.Dueño);
                 PlaySound(home.Song);
-
                 correct = true;
             }
             else
             {
                 Console.WriteLine("Felicidades " + rival.Dueño);
                 PlaySound(rival.Song);
-
                 correct = true;
             }
 
@@ -237,11 +235,11 @@ namespace BasketLeague
         static void Tweet(string message)
         {
             // Application tokens
-            const string CONSUMER_KEY = "GRpdf4ggSQVFaE9BuYRqR14je";
-            const string CONSUMER_SECRET = "zZHrgADb1HaIuN3etk45tHJIKO4DHEeRxPIhJfAKVI3jsKJa1g";
+            const string CONSUMER_KEY = "KEY";
+            const string CONSUMER_SECRET = "SECRET";
             // Access tokens
-            const string ACCESS_TOKEN = "1292783792856473601-xpmkThqVZW5gbDKofgHji75pNlHcoo";
-            const string ACCESS_TOKEN_SECRET = "rZq3GUbFdGy7bN0ihy9oD0aCOzu6T2oRHBJ4ejTnz3h0A";
+            const string ACCESS_TOKEN = "TOKEN";
+            const string ACCESS_TOKEN_SECRET = "TOKEN_SECRET";
 
             string twitterURL = "https://api.twitter.com/1.1/statuses/update.json";
 
