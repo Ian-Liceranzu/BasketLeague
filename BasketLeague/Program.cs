@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BasketLeague
 {
@@ -49,22 +52,21 @@ namespace BasketLeague
                 {
                     hr = home.Resultado(hd, ha) / 2;
                     rr = rival.Resultado(hd, ha) / 2;
-
-                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, hr));
-                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rr));
-
-                    WriteDataToFile(home, hr, rival, rr);
                 }
                 else
                 {
                     hr = home.Resultado(hd, ha);
                     rr = rival.Resultado(rd, ra);
-
-                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, hr));
-                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rr));
-
-                    WriteDataToFile(home, hr, rival, rr);
                 }
+
+                Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, hr));
+                Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rr));
+
+                if (WriteDataToFile(home, hr, rival, rr))
+                {
+                    Tweet(string.Format("{0} - {1}  {2} - {3}", home.NombreCompleto, hr, rival.NombreCompleto, rr));
+                }
+
                 Console.WriteLine("----------");
             }
             catch (Exception e)
@@ -86,8 +88,7 @@ namespace BasketLeague
         /// <returns>Lista de los equipos cargados</returns>
         static List<Team> CargarEquipos()
         {
-            // string path = @"Data\Teams.txt";
-            string path = @"Data\TeamsSummerCamp.txt";
+            string path = @"Data\Teams.txt";
 
             List<Team> teams = new List<Team>();
 
@@ -125,8 +126,10 @@ namespace BasketLeague
         /// <param name="resultadoHome">Puntos anotados por el equipo de casa</param>
         /// <param name="rival">Equipo que ha jugado fuera de casa</param>
         /// <param name="resultadoRival">Puntos anotados por el equipo de fuera</param>
-        static void WriteDataToFile(Team home, int resultadoHome, Team rival, int resultadoRival)
+        static bool WriteDataToFile(Team home, int resultadoHome, Team rival, int resultadoRival)
         {
+            bool correct = false;
+
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             FileInfo file = new FileInfo(@"Data\FrikiLeague.xlsx");
@@ -151,11 +154,13 @@ namespace BasketLeague
             {
                 Console.WriteLine("Felicidades " + home.Dueño);
                 PlaySound(home.Song);
+                correct = true;
             }
             else
             {
                 Console.WriteLine("Felicidades " + rival.Dueño);
                 PlaySound(rival.Song);
+                correct = true;
             }
 
             excelWorksheet.Cells["R" + row].Value = diferencia;
@@ -164,6 +169,8 @@ namespace BasketLeague
             ModificarTabla(excelWorksheet, rival, diferencia * -1);
 
             excelPackage.Save();
+
+            return correct;
         }
 
         /// <summary>
@@ -209,7 +216,6 @@ namespace BasketLeague
                 sp.SoundLocation = Environment.CurrentDirectory + @"\Data\Sound\" + song;
                 sp.Play();
             }
-
             else
             {
                 var wave = new WaveOut();
@@ -224,6 +230,84 @@ namespace BasketLeague
                 System.Threading.Thread.Sleep(1000);
                 tempo++;
             } while (tempo < 10);
+        }
+
+        static void Tweet(string message)
+        {
+            // Application tokens
+            const string CONSUMER_KEY = "KEY";
+            const string CONSUMER_SECRET = "SECRET";
+            // Access tokens
+            const string ACCESS_TOKEN = "TOKEN";
+            const string ACCESS_TOKEN_SECRET = "TOKEN_SECRET";
+
+            string twitterURL = "https://api.twitter.com/1.1/statuses/update.json";
+
+            // set the oauth version and signature method
+            string oauth_version = "1.0";
+            string oauth_signature_method = "HMAC-SHA1";
+
+            // create unique request details
+            string oauth_nonce = Convert.ToBase64String(new ASCIIEncoding().GetBytes(DateTime.Now.Ticks.ToString()));
+            System.TimeSpan timeSpan = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
+            string oauth_timestamp = Convert.ToInt64(timeSpan.TotalSeconds).ToString();
+
+            // create oauth signature
+            string baseFormat = "oauth_consumer_key={0}&oauth_nonce={1}&oauth_signature_method={2}" + "&oauth_timestamp={3}&oauth_token={4}&oauth_version={5}&status={6}";
+
+            string baseString = string.Format(
+                baseFormat,
+                CONSUMER_KEY,
+                oauth_nonce,
+                oauth_signature_method,
+                oauth_timestamp, ACCESS_TOKEN,
+                oauth_version,
+                Uri.EscapeDataString(message)
+            );
+
+            string oauth_signature = null;
+            using (HMACSHA1 hasher = new HMACSHA1(ASCIIEncoding.ASCII.GetBytes(Uri.EscapeDataString(CONSUMER_SECRET) + "&" + Uri.EscapeDataString(ACCESS_TOKEN_SECRET))))
+            {
+                oauth_signature = Convert.ToBase64String(hasher.ComputeHash(ASCIIEncoding.ASCII.GetBytes("POST&" + Uri.EscapeDataString(twitterURL) + "&" + Uri.EscapeDataString(baseString))));
+            }
+
+            // create the request header
+            string authorizationFormat = "OAuth oauth_consumer_key=\"{0}\", oauth_nonce=\"{1}\", " + "oauth_signature=\"{2}\", oauth_signature_method=\"{3}\", " + "oauth_timestamp=\"{4}\", oauth_token=\"{5}\", " + "oauth_version=\"{6}\"";
+
+            string authorizationHeader = string.Format(
+                authorizationFormat,
+                Uri.EscapeDataString(CONSUMER_KEY),
+                Uri.EscapeDataString(oauth_nonce),
+                Uri.EscapeDataString(oauth_signature),
+                Uri.EscapeDataString(oauth_signature_method),
+                Uri.EscapeDataString(oauth_timestamp),
+                Uri.EscapeDataString(ACCESS_TOKEN),
+                Uri.EscapeDataString(oauth_version)
+            );
+
+            HttpWebRequest objHttpWebRequest = (HttpWebRequest)WebRequest.Create(twitterURL);
+            objHttpWebRequest.Headers.Add("Authorization", authorizationHeader);
+            objHttpWebRequest.Method = "POST";
+            objHttpWebRequest.ContentType = "application/x-www-form-urlencoded";
+            using (Stream objStream = objHttpWebRequest.GetRequestStream())
+            {
+                byte[] content = ASCIIEncoding.ASCII.GetBytes("status=" + Uri.EscapeDataString(message));
+                objStream.Write(content, 0, content.Length);
+            }
+
+            var responseResult = "";
+
+            try
+            {
+                //success posting
+                WebResponse objWebResponse = objHttpWebRequest.GetResponse();
+                StreamReader objStreamReader = new StreamReader(objWebResponse.GetResponseStream());
+                responseResult = objStreamReader.ReadToEnd().ToString();
+            }
+            catch (Exception ex)
+            {
+                responseResult = "Twitter Post Error: " + ex.Message.ToString() + ", authHeader: " + authorizationHeader;
+            }
         }
     }
 }
