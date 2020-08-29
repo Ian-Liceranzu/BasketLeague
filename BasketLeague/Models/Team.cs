@@ -71,9 +71,8 @@ namespace BasketLeague.Models
         /// <param name="defender">Mínimo al que puede llegar el equipo debido a su defensa</param>
         /// <param name="atacar">Máximo al que puede llegar el equipo debido a su ataque</param>
         /// <returns>Puntos finales del equipo</returns>
-        public int Resultado(int defender, int atacar)
+        public int Resultado(Random rnd, int defender, int atacar)
         {
-            Random rnd = new Random();
             int result;
             if (defender < atacar)
             {

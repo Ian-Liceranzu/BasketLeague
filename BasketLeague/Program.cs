@@ -38,34 +38,43 @@ namespace BasketLeague
                 Team rival = teams[int.Parse(Console.ReadLine())];
 
                 Random rnd = new Random();
+                bool repeat = false;
 
-                int ha = home.Atacar(rival, rnd);
-                int hd = home.Defender(rival, rnd);
-
-                int ra = rival.Atacar(home, rnd);
-                int rd = rival.Defender(home, rnd);
-
-                Console.WriteLine("----------");
-                int hr;
-                int rr;
-                if (ha < hd && ra < rd) // En caso de dos equipos muy defensivos, el resultado se divide entre 2
+                do
                 {
-                    hr = home.Resultado(hd, ha) / 2;
-                    rr = rival.Resultado(hd, ha) / 2;
-                }
-                else
-                {
-                    hr = home.Resultado(hd, ha);
-                    rr = rival.Resultado(rd, ra);
-                }
+                    int ha = home.Atacar(rival, rnd);
+                    int hd = home.Defender(rival, rnd);
 
-                Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, hr));
-                Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rr));
+                    int ra = rival.Atacar(home, rnd);
+                    int rd = rival.Defender(home, rnd);
 
-                if (WriteDataToFile(home, hr, rival, rr))
-                {
-                    Tweet(string.Format("{0} - {1}  {2} - {3}", home.NombreCompleto, hr, rival.NombreCompleto, rr));
-                }
+                    Console.WriteLine("----------");
+                    int hr;
+                    int rr;
+                    if (ha < hd && ra < rd) // En caso de dos equipos muy defensivos, el resultado se divide entre 2
+                    {
+                        hr = home.Resultado(rnd, hd, ha) / 2;
+                        rr = rival.Resultado(rnd, hd, ha) / 2;
+                    }
+                    else
+                    {
+                        hr = home.Resultado(rnd, hd, ha);
+                        rr = rival.Resultado(rnd, rd, ra);
+                    }
+
+                    Console.WriteLine(string.Format("{0}: {1}", home.NombreCompleto, hr));
+                    Console.WriteLine(string.Format("{0}: {1}", rival.NombreCompleto, rr));
+
+                    if (WriteDataToFile(home, hr, rival, rr))
+                    {
+                        repeat = false;
+                        Tweet(string.Format("{0} - {1}  {2} - {3}", home.NombreCompleto, hr, rival.NombreCompleto, rr));
+                    }
+                    else
+                    {
+                        repeat = true;
+                    }
+                } while (repeat);
 
                 Console.WriteLine("----------");
             }
@@ -148,7 +157,7 @@ namespace BasketLeague
 
             if (diferencia == 0)
             {
-                throw new Exception("Han empatado");
+                return false;
             }
             else if (diferencia > 0)
             {
@@ -235,11 +244,11 @@ namespace BasketLeague
         static void Tweet(string message)
         {
             // Application tokens
-            const string CONSUMER_KEY = "KEY";
-            const string CONSUMER_SECRET = "SECRET";
+            const string CONSUMER_KEY = "YOUR_KEY";
+            const string CONSUMER_SECRET = "YOUR_SECRET";
             // Access tokens
-            const string ACCESS_TOKEN = "TOKEN";
-            const string ACCESS_TOKEN_SECRET = "TOKEN_SECRET";
+            const string ACCESS_TOKEN = "YOUR_TOKEN";
+            const string ACCESS_TOKEN_SECRET = "YOUR_TOKEN_SECRET";
 
             string twitterURL = "https://api.twitter.com/1.1/statuses/update.json";
 

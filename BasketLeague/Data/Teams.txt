@@ -1,6 +1,6 @@
 MP 3 7 6 4 Milwaukee_Platypus 1 Eva Eva.mp3
-THB 4 8 2 6 Tampa_Honey_Bagers 2 Jon Jon.mpeg
-JP 5 10 3 2 Jackson_Pandas 3 Sendoa BM.mpeg
+THB 4 8 2 6 Tampa_Honey_Bagers 2 Jon Jon.mp3
+JP 5 10 3 2 Jackson_Pandas 3 Sendoa BM.mp3
 LTW 3 8 2 7 Little_Rock_Wombats 4 Rodrigo Rodrigo.mp3
 RB 7 3 7 3 Reno_Bighorns 5 Ian BM.mp3
 BF 5 5 5 5 Boston_Frogs 6 Oscar BM.mp3
@@ -8,5 +8,5 @@ HM 5 5 5 5 Honolulu_Meerkats 7 Estanis Estanis.mp3
 CH 4 6 4 6 Columbus_Hellbenders 8 Fran Fran.mp3
 SKW 8 3 5 4 Seattle_Killer_Whales 9 Daira Daira.mp3
 KK 5 5 5 5 Kansas_Kangaroos 10 Idoia BM.mp3
-DS 5 5 5 5 Dallas_Squirrels 11 Irene BM.mpeg
+DS 5 5 5 5 Dallas_Squirrels 11 Irene BM.mp3
 MR 7 4 8 1 Miami_Rats 12 Alex BM.mp3
